@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twy.secondkill.mapper.ItemKillMapper">
+
+    <select id="selectAll" resultType="com.twy.secondkill.entity.ItemKill">
+        SELECT a.*,b.name AS itemName,
+        (CASE WHEN (NOW()) BETWEEN a.start_time AND a.end_time AND a.total>0
+        THEN 1 ELSE 0 END) AS canKill
+        FROM item_kill AS a LEFT JOIN item AS b
+        on a.item_id = b.id
+        where a.is_active = 1
+    </select>
+    <select id="selectByid" resultType="com.twy.secondkill.entity.ItemKill">
+        SELECT a.*,b.name AS itemName,
+        (CASE WHEN (NOW()) BETWEEN a.start_time AND a.end_time AND a.total>0
+        THEN 1 ELSE 0 END) AS canKill
+        FROM item_kill AS a LEFT JOIN item AS b
+        on a.item_id = b.id
+        where a.is_active = 1
+        AND a.id = #{id}
+    </select>
+</mapper>

@@ -1,27 +1,23 @@
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   datasource:
-    #druid \u6570\u636E\u6E90\u4E13\u6709\u914D\u7F6E
     username: root
     password: root
     url: jdbc:mysql://localhost:3306/second-kill?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&usessl=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #\u8FDE\u63A5\u6C60\u914D\u7F6E
     druid:
-      # \u914D\u7F6E\u6D4B\u8BD5\u67E5\u8BE2\u8BED\u53E5
       validationQuery: SELECT 1 FROM DUAL
-      # \u521D\u59CB\u5316\u5927\u5C0F\uFF0C\u6700\u5C0F\uFF0C\u6700\u5927
       initialSize: 5
       min-idle: 5
       max-active: 20
-      # \u914D\u7F6E\u76D1\u63A7\u7EDF\u8BA1\u62E6\u622A\u7684filters\uFF0C\u53BB\u6389\u540E\u76D1\u63A7\u754C\u9762sql\u65E0\u6CD5\u7EDF\u8BA1\uFF0C'wall'\u7528\u4E8E\u9632\u706B\u5899
       filters: stat,wall
-      # StatViewServlet\u914D\u7F6E\u3002\uFF08\u56E0\u4E3A\u66B4\u9732\u7684\u76D1\u63A7\u4FE1\u606F\u6BD4\u8F83\u654F\u611F\uFF0C\u652F\u6301\u5BC6\u7801\u52A0\u5BC6\u548C\u8BBF\u95EEip\u9650\u5B9A\uFF09
       stat-view-servlet:
         enabled: true
         url-pattern: /druid/*
         login-username: admin
         login-password: admin
-      # \u901A\u8FC7connectProperties\u5C5E\u6027\u6765\u6253\u5F00mergeSql\u529F\u80FD\uFF1B\u6162SQL\u8BB0\u5F55
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 mybatis-plus:
   mapper-locations: classpath:/mapper/*.xml

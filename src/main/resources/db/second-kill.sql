@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 29/03/2021 00:39:03
+ Date: 30/03/2021 00:19:59
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,12 @@ CREATE TABLE `item`  (
   `create_time` datetime(0) NULL DEFAULT NULL,
   `update_time` timestamp(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of item
+-- ----------------------------
+INSERT INTO `item` VALUES (1, '小米10', 'mi-10', 500, '2021-03-10', 1, '2021-03-10 20:54:39', '2021-03-10 20:54:42');
 
 -- ----------------------------
 -- Table structure for item_kill
@@ -46,7 +51,12 @@ CREATE TABLE `item_kill`  (
   `is_active` tinyint(11) NULL DEFAULT 1 COMMENT '是否有效（1=是；0=否）',
   `create_time` timestamp(0) NULL DEFAULT NULL COMMENT '创建的时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '待秒杀商品表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '待秒杀商品表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of item_kill
+-- ----------------------------
+INSERT INTO `item_kill` VALUES (1, 1, 100, '2021-03-29 20:55:01', '2021-03-30 20:55:06', 1, '2021-03-29 20:55:13');
 
 -- ----------------------------
 -- Table structure for item_kill_success
