@@ -97,27 +97,29 @@ public class ItemKillServiceImpl extends ServiceImpl<ItemKillMapper, ItemKill> i
         RLock lock = redissonClient.getLock(key);
         //三个参数、等待时间、锁过期时间、时间单位
         try {
-            lock.tryLock(30, 10, TimeUnit.SECONDS);
-            Integer count = itemKillSuccessMapper.selectCount(Wrappers.<ItemKillSuccess>lambdaQuery()
-                    .eq(ItemKillSuccess::getKillId, killid)
-                    .eq(ItemKillSuccess::getUserId, userid)
-                    .eq(ItemKillSuccess::getStatus, 0));
-            //判断当前用户是否购买过
-            if (count == 0) {
-                //获取商品详情
-                ItemKill itemKill = itemKillMapper.selectByid(killid);
-                if (itemKill != null && itemKill.getCanKill() == 1) {
-                    //更新的时候保证数量大于0
-                    boolean res = this.update(Wrappers.<ItemKill>lambdaUpdate().eq(ItemKill::getId, killid)
+            boolean flag = lock.tryLock(30, 10, TimeUnit.SECONDS);
+            if (flag) {
+                Integer count = itemKillSuccessMapper.selectCount(Wrappers.<ItemKillSuccess>lambdaQuery()
+                        .eq(ItemKillSuccess::getKillId, killid)
+                        .eq(ItemKillSuccess::getUserId, userid)
+                        .eq(ItemKillSuccess::getStatus, 0));
+                //判断当前用户是否购买过
+                if (count == 0) {
+                    //获取商品详情
+                    ItemKill itemKill = itemKillMapper.selectByid(killid);
+                    if (itemKill != null && itemKill.getCanKill() == 1) {
+                        //更新的时候保证数量大于0
+                        boolean res = this.update(Wrappers.<ItemKill>lambdaUpdate().eq(ItemKill::getId, killid)
 //                            .gt(ItemKill::getTotal, 0)
-                            .setSql(true, "total=total-1"));
-                    if (res) {
-                        commonRecordKillSuccessInfo(itemKill, userid);
-                        result = true;
+                                .setSql(true, "total=total-1"));
+                        if (res) {
+                            commonRecordKillSuccessInfo(itemKill, userid);
+                            result = true;
+                        }
                     }
+                } else {
+                    System.out.println("您已经抢购过该商品");
                 }
-            } else {
-                System.out.println("您已经抢购过该商品");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
