@@ -14,4 +14,8 @@ import com.twy.secondkill.entity.ItemKill;
 public interface ItemKillService extends IService<ItemKill> {
 
     Boolean KillItem(Integer killid, Integer userid);
+
+    Boolean KillItemV2(Integer killid, Integer userid);
+
+    Boolean KillItemV3(Integer killid, Integer userid);
 }

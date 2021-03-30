@@ -19,4 +19,6 @@ public interface ItemKillMapper extends BaseMapper<ItemKill> {
     List<ItemKill> selectAll();
 
     ItemKill selectByid(@Param("id") Integer id);
+
+    ItemKill selectByidV2(@Param("id") Integer killid);
 }

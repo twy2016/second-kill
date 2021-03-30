@@ -40,6 +40,36 @@ public class ItemKillController {
         return baseResponse;
     }
 
+    @PostMapping("/execute2")
+    @ResponseBody
+    public BaseResponse execute2(@RequestBody @Validated KillDTO killDTO) {
+        try {
+            Boolean res = itemKillService.KillItemV2(killDTO.getKillid(), killDTO.getUserid());
+            if (!res) {
+                return new BaseResponse(StatusCode.Fail.getCode(), "商品已经抢购完或您已抢购过该商品");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BaseResponse baseResponse = new BaseResponse(StatusCode.Success);
+        return baseResponse;
+    }
+
+    @PostMapping("/execute3")
+    @ResponseBody
+    public BaseResponse execute3(@RequestBody @Validated KillDTO killDTO) {
+        try {
+            Boolean res = itemKillService.KillItemV3(killDTO.getKillid(), killDTO.getUserid());
+            if (!res) {
+                return new BaseResponse(StatusCode.Fail.getCode(), "商品已经抢购完或您已抢购过该商品");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BaseResponse baseResponse = new BaseResponse(StatusCode.Success);
+        return baseResponse;
+    }
+
     @GetMapping(value = "/execute/success")
     public String killsuccess() {
         return "killsuccess";
